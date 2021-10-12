@@ -1,27 +1,28 @@
-let createError = require("http-errors");
-let express = require("express");
-let path = require("path");
-let cookieParser = require("cookie-parser");
-let logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
 //database setup
-let mongoose = require("mongoose");
-let DB = require("./db");
+const mongoose = require("mongoose");
+const DB = require("./db");
 
 //point mongoose to the Db URI
 
 mongoose.connect(DB.URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-let mongoDB = mongoose.connection;
+const mongoDB = mongoose.connection;
 mongoDB.on("error", console.error.bind(console, "connection Error"));
 mongoDB.once("open", () => {
   console.log("Connected to MongoDB...");
 });
 
-let indexRouter = require("../routes/index");
-let usersRouter = require("../routes/users");
+const indexRouter = require("../routes/index");
+const usersRouter = require("../routes/users");
+const booksRouter = require("../routes/book");
 
-let app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "../views"));
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, "../node_modules")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/book-list", booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
