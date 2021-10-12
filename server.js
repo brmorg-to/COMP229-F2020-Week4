@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require("./config/app");
+const app = require("./server/config/app");
 const debug = require("debug")("02-the-express-generator-end:server");
 const http = require("http");
 
